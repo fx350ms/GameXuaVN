@@ -1,0 +1,71 @@
+﻿
+@using GameXuaVN.Web.Startup
+@model List<GameXuaVN.Web.Models.File.FileViewModel>
+@{
+  
+    ViewBag.Title = L("Files");
+    ViewBag.CurrentPageName = PageNames.Files;
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Users/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Users/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("Users")</h1>
+            </div>
+            <div class="col-sm-6">
+                <a href="javascript:;" data-toggle="modal" data-target="#UserCreateModal" class="btn bg-blue float-sm-right">
+                    <i class="fa fa-plus-square"></i>
+                    @L("Create")
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<h2>File List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>File Name</th>
+            <th>Description</th>
+            <th>Downloads</th>
+            <th>Rating</th>
+            <th>Thumbnail</th>
+            <th style="width: 150px">@L("Actions")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var file in Model)
+        {
+            <tr>
+                <td>@file.FileName</td>
+                <td>@file.Description</td>
+                <td>@file.DownloadCount</td>
+                <td>@file.AverageRating</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(file.ThumbnailPath))
+                    {
+                        <img src="@file.ThumbnailPath" alt="Thumbnail" style="width:100px;height:auto;" />
+                    }
+                    else
+                    {
+                        <span>No thumbnail</span>
+                    }
+                </td>
+              
+            </tr>
+        }
+    </tbody>
+</table>
